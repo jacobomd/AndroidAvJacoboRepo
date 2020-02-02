@@ -1,0 +1,67 @@
+<resources>
+    <string name="app_name">Eh-Ho</string>
+    <string name="hint_UserName">UserName</string>
+    <string name="hint_Password">Password</string>
+    <string name="text_login">Login</string>
+    <string name="label_topics">Topics</string>
+    <string name="label_create_new_account">Create new account</string>
+    <string name="hint_Email">Email</string>
+    <string name="hint_confirm_password">Confirm password</string>
+    <string name="label_sign_up">Sign Up</string>
+    <string name="label_sign_in">Sign in</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="label_author">Author</string>
+    <string name="hint_title">Title</string>
+    <string name="hint_content">Content</string>
+    <string name="title_send">Send</string>
+    <string name="error_empty">This field cannot be empty</string>
+
+
+    <string name="minutes_zero">Just now</string>
+    <string name="error_password_length">Password must be at least 10 characters</string>
+    <string name="error_password_match">The password doesn\'t match</string>
+    <string name="label_loading">Loading</string>
+    <string name="title_log_out">Log out</string>
+    <string name="error_not_registered">User not registered</string>
+    <string name="error_network">No internet connection, check it and try again.</string>
+    <string name="error_request_default">We\'re sorry, something bad happened, try again later</string>
+    <string name="error_invalid_response">invalid response from server</string>
+    <string name="label_default_error">Oops something bad hapenned</string>
+    <string name="label_retry">RETRY</string>
+    <string name="label_create_topic">Create Topic</string>
+    <string name="label_author_topic">Author :</string>
+    <string name="label_content_post">Content post :</string>
+    <string name="label_created_at">Created at :</string>
+    <string name="button_create_post">Create post</string>
+    <string name="menu_send_post">Send</string>
+    <string name="label_create_post">Create post</string>
+
+    <plurals name="years">
+        <item quantity="one">%d year</item>
+        <item quantity="other">%d years</item>
+    </plurals>
+
+    <plurals name="months">
+        <item quantity="one">%d month</item>
+        <item quantity="other">%d months</item>
+    </plurals>
+
+    <plurals name="days">
+        <item quantity="one">%d day</item>
+        <item quantity="other">%d days</item>
+    </plurals>
+
+    <plurals name="hours">
+        <item quantity="one">%d hour</item>
+        <item quantity="other">%d hours</item>
+    </plurals>
+
+    <plurals name="minutes">
+        <item quantity="one">%d minute</item>
+        <item quantity="other">%d minutes</item>
+    </plurals>
+
+
+</resources>
