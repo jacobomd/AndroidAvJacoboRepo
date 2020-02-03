@@ -112,15 +112,15 @@ object TopicsRepo {
         val dummyList: MutableList<Topic> = mutableListOf()
 
         for (i in 1..50) {
-            val topic: Topic = Topic(title = "Title $i", content = "Content $i")
-            dummyList.add(topic)
+            val latestNew: Topic = Topic(title = "Title $i", content = "Content $i")
+            dummyList.add(latestNew)
 
         }
 
         return  dummyList
     }*//*
 
-    fun getTopic(id: String) = topics.find { it.id == id }
+    fun getLatestNew(id: String) = topics.find { it.id == id }
 
     fun addTopic (title: String, content: String) {
         topics.add(

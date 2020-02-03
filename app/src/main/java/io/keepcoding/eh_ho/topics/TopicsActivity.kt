@@ -13,6 +13,7 @@ import com.google.android.material.navigation.NavigationView
 import io.keepcoding.eh_ho.*
 import io.keepcoding.eh_ho.data.Topic
 import io.keepcoding.eh_ho.data.UserRepo
+import io.keepcoding.eh_ho.latest_news.LatestNewsFragment
 import io.keepcoding.eh_ho.login.LoginActivity
 import io.keepcoding.eh_ho.posts.EXTRA_TOPIC_ID
 import io.keepcoding.eh_ho.posts.EXTRA_TOPIC_TITLE
@@ -36,8 +37,6 @@ NavigationView.OnNavigationItemSelectedListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_topics)
-
-        //setSupportActionBar(toolbarTopicsToolbar)
 
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
@@ -95,17 +94,29 @@ NavigationView.OnNavigationItemSelectedListener {
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.nav_topics -> {
+                supportFragmentManager.beginTransaction()
+                    .replace(R.id.fragmentContainer, TopicsFragment())
+                    .commit()
                 Toast.makeText(this, "nav_topics clicked", Toast.LENGTH_SHORT).show()
             }
             R.id.nav_latest_news -> {
+                supportFragmentManager.beginTransaction()
+                    .replace(R.id.fragmentContainer, LatestNewsFragment())
+                    .commit()
                 Toast.makeText(this, "nav_latest_news clicked", Toast.LENGTH_SHORT).show()
             }
             R.id.nav_logout -> {
+                UserRepo.logOut(this)
+
+                val intent = Intent(this, LoginActivity::class.java)
+                startActivity(intent)
+                finish()
                 Toast.makeText(this, "nav_logout clicked", Toast.LENGTH_SHORT).show()
             }
 
         }
         drawerLayout.closeDrawer(GravityCompat.START)
-        return true    }
+        return true
+    }
 
 }

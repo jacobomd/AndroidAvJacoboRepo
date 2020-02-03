@@ -17,7 +17,7 @@ class TopicsAdapter (
     private val topics = mutableListOf<Topic>()
     private val listener : ((View) -> Unit) = {
         val topic = it.tag as Topic
-        //Log.d(TopicsAdapter::class.java.simpleName, topic.toString())
+        //Log.d(TopicsAdapter::class.java.simpleName, latestNew.toString())
         topicClickListener?.invoke(topic)
     }
 

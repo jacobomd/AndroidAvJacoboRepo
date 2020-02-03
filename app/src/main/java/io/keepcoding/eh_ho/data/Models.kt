@@ -3,7 +3,6 @@ package io.keepcoding.eh_ho.data
 
 import org.json.JSONObject
 import java.text.SimpleDateFormat
-import java.time.format.DateTimeFormatter
 import java.util.*
 
 data class Topic(
@@ -137,5 +136,63 @@ data class Post(
 
 
 
+    }
+}
+
+data class LatestNews(
+    val id: String = UUID.randomUUID().toString(),
+    val topic_title: String,
+    val topic_slug: String,
+    val username: String,
+    val cooked: String,
+    val created_at: String,
+    val posts_number: Int = 0,
+    val score: Int = 0
+) {
+    companion object {
+        fun parseLatestNews(response: JSONObject): List<LatestNews> {
+            val jsonLatestNews = response
+                .getJSONArray("latest_posts")
+
+            val latestNews = mutableListOf<LatestNews>()
+
+
+            for (i in 0 until jsonLatestNews.length()) {
+                val parsedLatestNew = parseLatestNew(jsonLatestNews.getJSONObject(i))
+                latestNews.add(parsedLatestNew)
+            }
+
+            return latestNews
+        }
+
+        private fun parseLatestNew(jsonObject: JSONObject): LatestNews {
+            val date = jsonObject.getString("created_at")
+                .replace("Z", "+0000")
+
+            val dateFormatted = LatestNews.convertDate(date)
+
+            val content = jsonObject.getString("cooked")
+                .replace("<p>", "")
+                .replace("</p>", "")
+
+            return LatestNews(
+                jsonObject.getInt("id").toString(),
+                jsonObject.getString("topic_title"),
+                jsonObject.getString("topic_slug"),
+                jsonObject.getString("username"),
+                content,
+                dateFormatted,
+                //jsonObject.getInt("posts_number"),
+                jsonObject.getInt("score")
+            )
+        }
+
+        private fun convertDate(date: String): String {
+            val originalFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ", Locale.getDefault())
+            val targetFormat = SimpleDateFormat("MMM dd, yyyy")
+            val dateResult = originalFormat.parse(date)
+            val formattedDate = targetFormat.format(dateResult)
+            return formattedDate
+        }
     }
 }

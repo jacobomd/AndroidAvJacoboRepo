@@ -4,9 +4,12 @@ package io.keepcoding.eh_ho.topics
 import android.content.Context
 import android.os.Bundle
 import android.view.*
+import android.widget.Toast
+import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.navigation.NavigationView
 import com.google.android.material.snackbar.Snackbar
 import io.keepcoding.eh_ho.R
 import io.keepcoding.eh_ho.data.RequestError
@@ -18,8 +21,10 @@ import kotlinx.android.synthetic.main.view_retry.*
 
 class TopicsFragment : Fragment(){
 
+
     var listener: TopicsInteractionListener? = null
     lateinit var adapter: TopicsAdapter
+
 
     override fun onAttach(context: Context?) {
         super.onAttach(context)
@@ -36,6 +41,7 @@ class TopicsFragment : Fragment(){
         }
     }
 
+
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
         inflater?.inflate(R.menu.menu_topics, menu)
         super.onCreateOptionsMenu(menu, inflater)
@@ -51,7 +57,6 @@ class TopicsFragment : Fragment(){
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
 
         listTopics.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         listTopics.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
