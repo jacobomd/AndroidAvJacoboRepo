@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import io.keepcoding.eh_ho.R
 import io.keepcoding.eh_ho.data.LatestNews
+import io.keepcoding.eh_ho.data.Topic
 import kotlinx.android.synthetic.main.item_post.view.*
 
 

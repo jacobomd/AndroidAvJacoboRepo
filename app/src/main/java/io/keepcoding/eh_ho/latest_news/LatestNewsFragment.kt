@@ -9,37 +9,34 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
-
 import io.keepcoding.eh_ho.R
-import io.keepcoding.eh_ho.data.PostsRepo
-import io.keepcoding.eh_ho.data.RequestError
-import io.keepcoding.eh_ho.data.TopicsRepo
+import io.keepcoding.eh_ho.data.*
 import io.keepcoding.eh_ho.posts.EXTRA_TOPIC_ID
-import io.keepcoding.eh_ho.posts.PostsAdapter
-import io.keepcoding.eh_ho.posts.PostsFragment
+import kotlinx.android.synthetic.main.content_topic.*
 import kotlinx.android.synthetic.main.fragment_latest_news.*
-import kotlinx.android.synthetic.main.fragment_posts.*
 import kotlinx.android.synthetic.main.fragment_posts.swipeRefreshLayout
-import kotlinx.android.synthetic.main.fragment_topics.*
 import kotlinx.android.synthetic.main.view_retry.*
 
 
 class LatestNewsFragment : Fragment() {
 
-    //var listener: LatestNewsFragment.PostsInteractionListener? = null
+    var listener: LatestNewsInteractionListener? = null
     lateinit var adapter : LatestNewsAdapter
 
     override fun onAttach(context: Context?) {
         super.onAttach(context)
-        //if (context is LatestNewsFragment.PostsInteractionListener) {
-          //  listener = context
-        //}
+        if (context is LatestNewsInteractionListener) {
+            listener = context
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         //setHasOptionsMenu(true)
-        adapter = LatestNewsAdapter()
+        adapter = LatestNewsAdapter {
+            goToTopicDetail(it = it)
+        }
+
     }
 
     override fun onCreateView(
@@ -53,13 +50,16 @@ class LatestNewsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val texto = arguments?.getString(EXTRA_TOPIC_ID)
-        val topicId = texto?.toInt()
+        //val texto = arguments?.getString(EXTRA_TOPIC_ID)
+        //val topicId = texto?.toInt()
 
         listLatestNews.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         listLatestNews.adapter = adapter
 
-        swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary)
+
+        swipeRefreshLayoutLatestNews.setColorSchemeResources(R.color.colorPrimary)
+        swipeRefreshLayoutLatestNews.setOnRefreshListener { loadLatestNews() }
+        buttonRetry.setOnClickListener { loadLatestNews() }
 
      /*   topicId?.let {
             loadPost(it)
@@ -80,18 +80,18 @@ class LatestNewsFragment : Fragment() {
 
     private fun loadLatestNews() {
 
-        //enableLoading(true)
+        enableLoading(true)
 
         context?.let {
-            PostsRepo.getLatestNews(
+            LatestNewsRepo.getLatestNews(
                 it,
                 {
-                    //enableLoading(false)
+                    enableLoading(false)
                     adapter.setLatestNews(it)
-                    swipeRefreshLayout.isRefreshing = false
+                    swipeRefreshLayoutLatestNews.isRefreshing = false
                 },
                 {
-                    //enableLoading(false)
+                    enableLoading(false)
                     handleRequestError(it)
                 }
             )
@@ -99,10 +99,24 @@ class LatestNewsFragment : Fragment() {
 
     }
 
+    private fun enableLoading(enabled: Boolean) {
+        viewRetryLatestNews.visibility = View.INVISIBLE
+
+        if (enabled) {
+            listLatestNews.visibility = View.INVISIBLE
+            //buttonCreate.hide()
+            viewLoadingLatestNews.visibility = View.VISIBLE
+        } else {
+            listLatestNews.visibility = View.VISIBLE
+            //buttonCreate.show()
+            viewLoadingLatestNews.visibility = View.INVISIBLE
+        }
+    }
+
     private fun handleRequestError(requestError: RequestError) {
 
-        //listTopics.visibility = View.INVISIBLE
-        //viewRetry.visibility = View.VISIBLE
+        listLatestNews.visibility = View.INVISIBLE
+        viewRetryLatestNews.visibility = View.VISIBLE
 
         val message = if (requestError.messageId != null)
             getString(requestError.messageId)
@@ -112,6 +126,15 @@ class LatestNewsFragment : Fragment() {
             getString(R.string.error_request_default)
 
         Snackbar.make(parentLayoutLatest, message, Snackbar.LENGTH_LONG).show()
+    }
+
+    private fun goToTopicDetail(it: LatestNews) {
+        listener?.onLatestNewSelected(it)
+
+    }
+
+    interface LatestNewsInteractionListener {
+        fun onLatestNewSelected(latestNews: LatestNews)
     }
 
 }

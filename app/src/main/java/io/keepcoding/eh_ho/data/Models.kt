@@ -142,11 +142,12 @@ data class Post(
 data class LatestNews(
     val id: String = UUID.randomUUID().toString(),
     val topic_title: String,
+    val topic_id: Int,
     val topic_slug: String,
     val username: String,
     val cooked: String,
     val created_at: String,
-    val posts_number: Int = 0,
+    val post_number: Int = 0,
     val score: Int = 0
 ) {
     companion object {
@@ -178,11 +179,12 @@ data class LatestNews(
             return LatestNews(
                 jsonObject.getInt("id").toString(),
                 jsonObject.getString("topic_title"),
+                jsonObject.getInt("topic_id"),
                 jsonObject.getString("topic_slug"),
                 jsonObject.getString("username"),
                 content,
                 dateFormatted,
-                //jsonObject.getInt("posts_number"),
+                jsonObject.getInt("post_number"),
                 jsonObject.getInt("score")
             )
         }

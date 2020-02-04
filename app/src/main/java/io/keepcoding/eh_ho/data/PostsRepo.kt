@@ -41,36 +41,7 @@ object PostsRepo {
             .add(request)
     }
 
-    fun getLatestNews(
-        context: Context,
-        onSuccess: (List<LatestNews>) -> Unit,
-        onError: (RequestError) -> Unit
-    ) {
-        val username = UserRepo.getUsername(context)
-        val request = UserRequest(
-            username,
-            Request.Method.GET,
-            ApiRoutes.getLatestNews(),
-            null,
-            {
-                it?.let {
-                    onSuccess.invoke(LatestNews.parseLatestNews(it))
-                }
 
-                if (it == null)
-                    onError.invoke(RequestError(messageId = R.string.error_invalid_response))
-            },
-            {
-                it.printStackTrace()
-                if (it is NetworkError)
-                    onError.invoke(RequestError(messageId = R.string.error_network))
-                else
-                    onError.invoke(RequestError(it))
-            })
-
-        ApiRequestQueue.getRequesteQueue(context)
-            .add(request)
-    }
 
     fun createPost(
         context: Context,

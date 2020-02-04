@@ -31,7 +31,7 @@
                 android:textSize="16sp"
                 android:textStyle="bold"
                 android:textAllCaps="true"
-                android:hint="Titulo del topic"
+                android:hint="Titulo del latestNews"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"

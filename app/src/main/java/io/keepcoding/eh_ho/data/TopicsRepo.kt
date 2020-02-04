@@ -1,14 +1,20 @@
 package io.keepcoding.eh_ho.data
 
 import android.content.Context
+import android.os.Handler
+import androidx.room.Room
 import com.android.volley.NetworkError
 import com.android.volley.Request
 import com.android.volley.ServerError
 import io.keepcoding.eh_ho.R
+import io.keepcoding.eh_ho.database.LatestNewsDatabase
+import io.keepcoding.eh_ho.database.TopicDatabase
+import io.keepcoding.eh_ho.database.TopicEntity
 import org.json.JSONObject
 import java.nio.charset.Charset
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.concurrent.thread
 
 object TopicsRepo {
 
@@ -17,6 +23,11 @@ object TopicsRepo {
         onSuccess: (List<Topic>) -> Unit,
         onError: (RequestError) -> Unit
     ) {
+
+        val db: TopicDatabase = Room.databaseBuilder(
+            context,
+            TopicDatabase::class.java, "topic-database"
+        ).build()
         val username = UserRepo.getUsername(context)
         val request = UserRequest(
             username,
@@ -26,6 +37,9 @@ object TopicsRepo {
             {
                 it?.let {
                     onSuccess.invoke(Topic.parseTopics(it))
+                    thread {
+                        db.topicDao().insertAll(Topic.parseTopics(it).toEntity())
+                    }
                 }
 
                 if (it == null)
@@ -33,9 +47,21 @@ object TopicsRepo {
             },
             {
                 it.printStackTrace()
-                if (it is NetworkError)
-                    onError.invoke(RequestError(messageId = R.string.error_network))
-                else
+                if (it is NetworkError) {
+                    val handler = Handler(context.mainLooper)
+                    thread {
+                        val latestNewList = db.topicDao().getTopics()
+                        val runnable = Runnable {
+                            if (latestNewList.isNotEmpty()) {
+                                onSuccess(latestNewList.toModel())
+                            } else {
+                                onError.invoke(RequestError(messageId = R.string.error_network))
+                            }
+                        }
+                        handler.post(runnable)
+                    }
+
+                } else
                     onError.invoke(RequestError(it))
             })
 
@@ -79,10 +105,7 @@ object TopicsRepo {
 
                     onError.invoke(RequestError(it, message = errorMessage))
 
-
-                }
-
-                else if (it is NetworkError)
+                } else if (it is NetworkError)
                     onError.invoke(RequestError(it, messageId = R.string.error_network))
                 else
                     onError.invoke(RequestError(it))
@@ -93,55 +116,24 @@ object TopicsRepo {
             .add(request)
     }
 
+
 }
 
-/*
-   //////// METODOS PARA REALIZAR DATOS DUMMIES ANTES DE TRAERLOS DE LA API //////
+private fun List<TopicEntity>.toModel(): List<Topic> = map { it.toModel() }
 
-    val topics: MutableList<Topic> = mutableListOf()
+private fun TopicEntity.toModel(): Topic = Topic(
+    id = topicId,
+    title = title,
+    posts = posts,
+    views = views
+)
 
-*//*    get() {
-        if (field.isEmpty()) {
-            field.addAll(dummyTopics())
-        }
-        return field
-    }*//*
+private fun List<Topic>.toEntity(): List<TopicEntity> = map { it.toEntity() }
 
-*//*    fun dummyTopics () : List<Topic> {
-
-        val dummyList: MutableList<Topic> = mutableListOf()
-
-        for (i in 1..50) {
-            val latestNew: Topic = Topic(title = "Title $i", content = "Content $i")
-            dummyList.add(latestNew)
-
-        }
-
-        return  dummyList
-    }*//*
-
-    fun getLatestNew(id: String) = topics.find { it.id == id }
-
-    fun addTopic (title: String, content: String) {
-        topics.add(
-            Topic(
-                title = title
-            ))
-    }
-
-
-    private fun formatDate(date: String): Date {
-        val formatter = SimpleDateFormat("dd/MM/yyyy hh:mm:ss")
-
-        return formatter.parse(date)
-            ?: throw IllegalArgumentException("Date $date has a format incorrect, try again with the format dd/MM/yyyy hh:mm:ss")
-    }
-
-
-    private fun dummyTopics (count: Int = 50) : List<Topic> {
-
-        return (1..count).map {
-            Topic(title = "Title $it")
-        }
-
-    }*/
+private fun Topic.toEntity(): TopicEntity = TopicEntity(
+    topicId = id,
+    title = title,
+    date = date.toString(),
+    posts = posts,
+    views = views
+)

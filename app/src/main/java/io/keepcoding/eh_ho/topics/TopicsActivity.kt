@@ -11,6 +11,7 @@ import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
 import io.keepcoding.eh_ho.*
+import io.keepcoding.eh_ho.data.LatestNews
 import io.keepcoding.eh_ho.data.Topic
 import io.keepcoding.eh_ho.data.UserRepo
 import io.keepcoding.eh_ho.latest_news.LatestNewsFragment
@@ -18,6 +19,7 @@ import io.keepcoding.eh_ho.login.LoginActivity
 import io.keepcoding.eh_ho.posts.EXTRA_TOPIC_ID
 import io.keepcoding.eh_ho.posts.EXTRA_TOPIC_TITLE
 import io.keepcoding.eh_ho.posts.PostsActivity
+import kotlinx.android.synthetic.main.content_topic.*
 
 
 const val TRANSACTION_CREATE_TOPIC = "create_topic"
@@ -26,7 +28,8 @@ const val TRANSACTION_CREATE_TOPIC = "create_topic"
 class TopicsActivity : AppCompatActivity(),
     TopicsFragment.TopicsInteractionListener,
     CreateTopicFragment.CreateTopicInterationListener,
-NavigationView.OnNavigationItemSelectedListener {
+NavigationView.OnNavigationItemSelectedListener,
+LatestNewsFragment.LatestNewsInteractionListener{
 
 
     lateinit var toolbar: Toolbar
@@ -45,6 +48,7 @@ NavigationView.OnNavigationItemSelectedListener {
         }
 
         toolbar = findViewById(R.id.toolbar)
+        titleActionBar.text = title
         setSupportActionBar(toolbar)
 
         drawerLayout = findViewById(R.id.drawer_layout)
@@ -66,6 +70,7 @@ NavigationView.OnNavigationItemSelectedListener {
         intent.putExtra(EXTRA_TOPIC_TITLE, topic.title)
 
         startActivity(intent)
+       finish()
     }
 
     override fun onTopicSelected(topic: Topic) {
@@ -77,6 +82,20 @@ NavigationView.OnNavigationItemSelectedListener {
             .replace(R.id.fragmentContainer, CreateTopicFragment())
             .addToBackStack(TRANSACTION_CREATE_TOPIC)
             .commit()
+    }
+
+    override fun onLatestNewSelected(latestNews: LatestNews) {
+        goToTopicDetail(latestNews)
+    }
+
+    private fun goToTopicDetail(latestNews: LatestNews) {
+        val intent = Intent(this, PostsActivity::class.java)
+
+        intent.putExtra(EXTRA_TOPIC_ID, latestNews.topic_id.toString())
+        intent.putExtra(EXTRA_TOPIC_TITLE, latestNews.topic_title)
+
+        startActivity(intent)
+        finish()
     }
 
     override fun onTopicCreated() {
@@ -94,16 +113,16 @@ NavigationView.OnNavigationItemSelectedListener {
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.nav_topics -> {
+                titleActionBar.text = "Topics"
                 supportFragmentManager.beginTransaction()
                     .replace(R.id.fragmentContainer, TopicsFragment())
                     .commit()
-                Toast.makeText(this, "nav_topics clicked", Toast.LENGTH_SHORT).show()
             }
             R.id.nav_latest_news -> {
+                titleActionBar.text = "Latest News"
                 supportFragmentManager.beginTransaction()
                     .replace(R.id.fragmentContainer, LatestNewsFragment())
                     .commit()
-                Toast.makeText(this, "nav_latest_news clicked", Toast.LENGTH_SHORT).show()
             }
             R.id.nav_logout -> {
                 UserRepo.logOut(this)
@@ -111,7 +130,6 @@ NavigationView.OnNavigationItemSelectedListener {
                 val intent = Intent(this, LoginActivity::class.java)
                 startActivity(intent)
                 finish()
-                Toast.makeText(this, "nav_logout clicked", Toast.LENGTH_SHORT).show()
             }
 
         }

@@ -1,15 +1,18 @@
 package io.keepcoding.eh_ho.posts
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import io.keepcoding.eh_ho.R
+import io.keepcoding.eh_ho.topics.TopicsActivity
 import java.lang.IllegalArgumentException
 
 const val EXTRA_TOPIC_ID = "topic_id"
 const val EXTRA_TOPIC_TITLE = "topic_title"
 const val TRANSACTION_CREATE_POST = "create_post"
 
-class PostsActivity : AppCompatActivity(), PostsFragment.PostsInteractionListener, CreatePostFragment.CreatePostInteractionListener {
+class PostsActivity : AppCompatActivity(), PostsFragment.PostsInteractionListener,
+    CreatePostFragment.CreatePostInteractionListener {
 
 
     var topicTitle : String? = null
@@ -59,5 +62,12 @@ class PostsActivity : AppCompatActivity(), PostsFragment.PostsInteractionListene
 
     override fun onPostCreated() {
         supportFragmentManager.popBackStack()
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        val intent = Intent(this, TopicsActivity::class.java)
+        startActivity(intent)
+        finish()
     }
 }

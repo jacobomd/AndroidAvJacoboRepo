@@ -7,19 +7,19 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <include
-        android:id="@+id/viewLoading"
+        android:id="@+id/viewLoadingLatestNews"
         layout="@layout/view_loading"
         android:visibility="invisible" />
 
     <include
-        android:id="@+id/viewRetry"
+        android:id="@+id/viewRetryLatestNews"
         layout="@layout/view_retry"
         android:visibility="invisible"/>
 
 
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:id="@+id/swipeRefreshLayout"
+        android:id="@+id/swipeRefreshLayoutLatestNews"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         >
