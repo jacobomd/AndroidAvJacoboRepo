@@ -6,13 +6,13 @@ import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
 import com.google.android.material.snackbar.Snackbar
-import io.keepcoding.eh_ho.LoadingDialogFragment
+import io.keepcoding.eh_ho.common.LoadingDialogFragment
 
 import io.keepcoding.eh_ho.R
 import io.keepcoding.eh_ho.data.CreatePostModel
 import io.keepcoding.eh_ho.data.PostsRepo
 import io.keepcoding.eh_ho.data.RequestError
-import io.keepcoding.eh_ho.topics.TAG_LOADING_DIALOG
+import io.keepcoding.eh_ho.topics.view.ui.TAG_LOADING_DIALOG
 import kotlinx.android.synthetic.main.fragment_create_post.*
 import kotlinx.android.synthetic.main.fragment_create_post.parentLayout
 
@@ -68,7 +68,9 @@ class CreatePostFragment : Fragment() {
 
     private fun enableLoadingDialog(enable: Boolean) {
         if (enable)
-            loadingDialogFragment.show(childFragmentManager, TAG_LOADING_DIALOG)
+            loadingDialogFragment.show(childFragmentManager,
+                TAG_LOADING_DIALOG
+            )
         else
             loadingDialogFragment.dismiss()
     }

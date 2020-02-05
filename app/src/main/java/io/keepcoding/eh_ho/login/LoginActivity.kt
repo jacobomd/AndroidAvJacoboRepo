@@ -1,18 +1,16 @@
 package io.keepcoding.eh_ho.login
 
 import android.content.Intent
-import android.os.AsyncTask
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import com.google.android.material.snackbar.Snackbar
 import io.keepcoding.eh_ho.R
 import io.keepcoding.eh_ho.data.RequestError
 import io.keepcoding.eh_ho.data.SignModel
 import io.keepcoding.eh_ho.data.SignUpModel
 import io.keepcoding.eh_ho.data.UserRepo
-import io.keepcoding.eh_ho.topics.TopicsActivity
+import io.keepcoding.eh_ho.topics.view.ui.TopicsActivity
 import kotlinx.android.synthetic.main.activity_login.*
 
 class LoginActivity : AppCompatActivity(),

@@ -7,7 +7,11 @@ import androidx.recyclerview.widget.RecyclerView
 import io.keepcoding.eh_ho.R
 import io.keepcoding.eh_ho.data.LatestNews
 import io.keepcoding.eh_ho.data.Topic
+import kotlinx.android.synthetic.main.item_latest_news.view.*
 import kotlinx.android.synthetic.main.item_post.view.*
+import kotlinx.android.synthetic.main.item_post.view.textViewContent
+import kotlinx.android.synthetic.main.item_post.view.textViewDate
+import kotlinx.android.synthetic.main.item_post.view.textViewTitle
 
 
 class LatestNewsAdapter (
@@ -23,7 +27,7 @@ class LatestNewsAdapter (
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LatestNewsHolder {
 
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_post, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_latest_news, parent, false)
 
         return LatestNewsHolder(view)
     }
@@ -53,9 +57,11 @@ class LatestNewsAdapter (
                     tag = field
 
                     field?.let {
-                        textViewTitle.text = field?.username
-                        textViewContent.text = field?.cooked
+                        textViewTitle.text = field?.topic_title
+                        textViewContent.text = field?.topic_slug
                         textViewDate.text = field?.created_at.toString()
+                        textViewPostNumber.text = field?.post_number.toString()
+                        textViewScore.text = field?.score.toString()
 
                     }
 

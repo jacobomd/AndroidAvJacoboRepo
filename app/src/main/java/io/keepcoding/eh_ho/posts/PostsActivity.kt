@@ -4,7 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import io.keepcoding.eh_ho.R
-import io.keepcoding.eh_ho.topics.TopicsActivity
+import io.keepcoding.eh_ho.topics.view.ui.TopicsActivity
 import java.lang.IllegalArgumentException
 
 const val EXTRA_TOPIC_ID = "topic_id"
