@@ -14,6 +14,7 @@ import kotlinx.android.synthetic.main.fragment_create_topic.*
 import kotlinx.android.synthetic.main.fragment_create_topic.parentLayout
 
 const val TAG_LOADING_DIALOG = "Loading_dialog"
+const val CREATE_TOPIC_FRAGMENT_TAG = "CREATE_TOPIC_FRAGMENT"
 
 class CreateTopicFragment : Fragment() {
 
@@ -54,43 +55,17 @@ class CreateTopicFragment : Fragment() {
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when (item?.itemId) {
-            R.id.action_send -> listener?.onCreateTopicOptionClicked()
+            R.id.action_send -> listener?.onCreateTopicOptionClicked(
+                model = CreateTopicModel(
+                    title = inputTitle.text.toString(),
+                    content = inputContent.text.toString()
+                )
+            )
         }
         return super.onOptionsItemSelected(item)
     }
 
-
-    private fun createTopic() {
-        if (isFormValid()) {
-            postTopic()
-        } else {
-            showErrors()
-        }
-    }
-
-    private fun postTopic() {
-        val model = CreateTopicModel(
-            inputTitle.text.toString(),
-            inputContent.text.toString()
-        )
-        context?.let {
-            enableLoadingDialog(true)
-            TopicsRepo.createTopic(
-                it,
-                model,
-                {
-                    enableLoadingDialog(false)
-                    listener?.onTopicCreated()
-                },
-                {
-                    enableLoadingDialog(false)
-                    handleError(it)
-                }
-            )
-        }
-    }
-
-    private fun enableLoadingDialog(enable: Boolean) {
+    fun enableLoadingDialog(enable: Boolean) {
         if (enable)
             loadingDialogFragment.show(
                 childFragmentManager,
@@ -100,31 +75,8 @@ class CreateTopicFragment : Fragment() {
             loadingDialogFragment.dismiss()
     }
 
-    private fun handleError(requestError: RequestError) {
-        val message = if (requestError.messageId != null)
-            getString(requestError.messageId)
-        else if (requestError.message != null)
-            requestError.message
-        else
-            getString(R.string.error_request_default)
-
-        Snackbar.make(parentLayout, message, Snackbar.LENGTH_LONG).show()
-    }
-
-
-    private fun showErrors() {
-        if (inputTitle.text?.isEmpty() == true)
-            inputTitle.error = getString(R.string.error_empty)
-        if (inputContent.text?.isEmpty() == true)
-            inputContent.error = getString(R.string.error_empty)
-    }
-
-    private fun isFormValid() =
-        inputTitle.text?.isNotEmpty() ?: false &&
-                inputContent.text?.isNotEmpty() ?: false
 
     interface CreateTopicInteractionListener {
-        fun onTopicCreated()
-        fun onCreateTopicOptionClicked()
+        fun onCreateTopicOptionClicked(model: CreateTopicModel)
     }
 }

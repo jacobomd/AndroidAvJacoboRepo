@@ -87,7 +87,7 @@ class TopicsFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        listener?.onTopicsFragmentResumed(context = context)
+        listener?.onTopicsFragmentResumed()
 
     }
 
@@ -175,7 +175,7 @@ class TopicsFragment : Fragment() {
         fun onTopicSelected(topic: Topic)
         fun onLogOutOptionClicked()
         fun onRetryButtonClicked()
-        fun onTopicsFragmentResumed(context: Context?)
+        fun onTopicsFragmentResumed()
         fun onCreateTopicButtonClicked()
         fun onSwipeRefreshLayoutClicked()
     }

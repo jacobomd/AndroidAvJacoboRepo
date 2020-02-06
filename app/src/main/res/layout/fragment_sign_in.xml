@@ -11,7 +11,7 @@
         android:id="@+id/inputUsername"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/hint_UserName"/>
+        android:hint="@string/hint_username"/>
 
     <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/inputPassword"
@@ -19,7 +19,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:inputType="textPassword"
-        android:hint="@string/hint_Password"/>
+        android:hint="@string/hint_password"/>
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/buttonLogin"
@@ -32,7 +32,7 @@
         android:layout_marginStart="56dp"
         android:layout_marginEnd="56dp"
         android:textColor="@android:color/white"
-        android:text="@string/text_login"/>
+        android:text="@string/label_login"/>
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/labelCreateAccount"

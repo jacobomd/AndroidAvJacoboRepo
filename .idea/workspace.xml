@@ -11,19 +11,22 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="60f7dcba-dee0-41a3-92d9-4c2eddbcb8d8" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/io/keepcoding/eh_ho/topics/view/state/TopicManegementState.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/5.4.1/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.4.1/executionHistory/executionHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/5.4.1/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.4.1/executionHistory/executionHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/5.4.1/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.4.1/fileHashes/fileHashes.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/5.4.1/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.4.1/fileHashes/fileHashes.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/5.4.1/fileHashes/resourceHashesCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.4.1/fileHashes/resourceHashesCache.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/io/keepcoding/eh_ho/latest_news/LatestNewsFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/io/keepcoding/eh_ho/latest_news/LatestNewsFragment.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/io/keepcoding/eh_ho/topics/view/state/TopicManegementState.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/io/keepcoding/eh_ho/topics/view/state/TopicManegementState.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/io/keepcoding/eh_ho/topics/view/ui/CreateTopicFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/io/keepcoding/eh_ho/topics/view/ui/CreateTopicFragment.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/io/keepcoding/eh_ho/topics/view/ui/TopicsActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/io/keepcoding/eh_ho/topics/view/ui/TopicsActivity.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/io/keepcoding/eh_ho/topics/view/ui/TopicsFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/io/keepcoding/eh_ho/topics/view/ui/TopicsFragment.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/io/keepcoding/eh_ho/topics/viewmodel/TopicViewModel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/io/keepcoding/eh_ho/topics/viewmodel/TopicViewModel.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_sign_in.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_sign_in.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_sign_up.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_sign_up.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/menu/menu_create_post.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/menu/menu_create_post.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/menu/menu_send_post.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/menu/menu_send_post.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -49,33 +52,32 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/io/keepcoding/eh_ho/topics/view/ui/TopicsFragment.kt">
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/io/keepcoding/eh_ho/topics/view/ui/TopicsActivity.kt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="230">
-              <caret line="137" column="8" selection-start-line="137" selection-start-column="8" selection-end-line="137" selection-end-column="8" />
+            <state relative-caret-position="706">
+              <caret line="176" column="60" selection-start-line="176" selection-start-column="60" selection-end-line="176" selection-end-column="60" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/io/keepcoding/eh_ho/topics/viewmodel/TopicViewModel.kt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="245">
+              <caret line="69" column="70" selection-start-line="69" selection-start-column="70" selection-end-line="69" selection-end-column="70" />
               <folding>
-                <element signature="e#44#683#0" expanded="true" />
-                <element signature="e#2571#2970#0" />
+                <element signature="e#46#455#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/io/keepcoding/eh_ho/latest_news/LatestNewsFragment.kt">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/io/keepcoding/eh_ho/data/UserRepo.kt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="75">
-              <caret line="19" column="34" selection-start-line="19" selection-start-column="10" selection-end-line="19" selection-end-column="34" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/io/keepcoding/eh_ho/topics/view/ui/TopicsActivity.kt">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="412">
-              <caret line="89" lean-forward="true" selection-start-line="89" selection-end-line="89" />
+            <state relative-caret-position="406">
+              <caret line="113" column="11" lean-forward="true" selection-start-line="113" selection-start-column="11" selection-end-line="113" selection-end-column="11" />
             </state>
           </provider>
         </entry>
@@ -83,8 +85,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/io/keepcoding/eh_ho/topics/view/state/TopicManegementState.kt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="90">
-              <caret line="6" column="11" selection-start-line="6" selection-start-column="11" selection-end-line="6" selection-end-column="11" />
+            <state relative-caret-position="180">
+              <caret line="12" column="22" selection-start-line="12" selection-start-column="22" selection-end-line="12" selection-end-column="22" />
               <folding>
                 <element signature="e#47#129#0" expanded="true" />
               </folding>
@@ -93,22 +95,28 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/io/keepcoding/eh_ho/topics/view/ui/CreateTopicFragment.kt">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/io/keepcoding/eh_ho/posts/CreatePostFragment.kt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-390">
-              <caret line="60" selection-start-line="60" selection-end-line="60" />
+            <state relative-caret-position="690">
+              <caret line="59" column="66" lean-forward="true" selection-start-line="59" selection-start-column="66" selection-end-line="59" selection-end-column="66" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/io/keepcoding/eh_ho/topics/viewmodel/TopicViewModel.kt">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/io/keepcoding/eh_ho/topics/view/ui/TopicsFragment.kt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="294">
-              <caret line="41" column="62" lean-forward="true" selection-start-line="41" selection-start-column="62" selection-end-line="41" selection-end-column="62" />
-              <folding>
-                <element signature="e#46#455#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="331">
+              <caret line="169" column="18" selection-start-line="169" selection-start-column="18" selection-end-line="169" selection-end-column="18" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/io/keepcoding/eh_ho/latest_news/LatestNewsFragment.kt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="6">
+              <caret line="61" column="30" selection-start-line="61" selection-start-column="30" selection-end-line="61" selection-end-column="30" />
             </state>
           </provider>
         </entry>
@@ -135,11 +143,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/app/src/main/java/io/keepcoding/eh_ho/topics/CreateTopicFragment.kt" />
-        <option value="$PROJECT_DIR$/app/src/main/java/io/keepcoding/eh_ho/data/ApiModels.kt" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_posts.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/io/keepcoding/eh_ho/topics/ScrollCoordinatorLayout.kt" />
-        <option value="$PROJECT_DIR$/app/src/main/java/io/keepcoding/eh_ho/topics/ScrollAwareFABBehavior.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/io/keepcoding/eh_ho/topics/ScrollLayoutBehavior.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_topics.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/drawable/rounded_corner.xml" />
@@ -180,11 +183,16 @@
         <option value="$PROJECT_DIR$/app/build/generated/source/buildConfig/debug/io/keepcoding/eh_ho/BuildConfig.java" />
         <option value="$PROJECT_DIR$/gradle.properties" />
         <option value="$PROJECT_DIR$/app/src/main/java/io/keepcoding/eh_ho/common/LoadingDialogFragment.kt" />
+        <option value="$PROJECT_DIR$/app/src/main/java/io/keepcoding/eh_ho/latest_news/LatestNewsFragment.kt" />
+        <option value="$PROJECT_DIR$/app/src/main/res/values/strings.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/io/keepcoding/eh_ho/topics/view/ui/CreateTopicFragment.kt" />
+        <option value="$PROJECT_DIR$/app/src/main/java/io/keepcoding/eh_ho/topics/view/ui/TopicsFragment.kt" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_sign_in.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_sign_up.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/menu/menu_create_post.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/menu/menu_send_post.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/io/keepcoding/eh_ho/topics/view/state/TopicManegementState.kt" />
         <option value="$PROJECT_DIR$/app/src/main/java/io/keepcoding/eh_ho/topics/viewmodel/TopicViewModel.kt" />
-        <option value="$PROJECT_DIR$/app/src/main/java/io/keepcoding/eh_ho/topics/view/ui/TopicsFragment.kt" />
-        <option value="$PROJECT_DIR$/app/src/main/java/io/keepcoding/eh_ho/latest_news/LatestNewsFragment.kt" />
         <option value="$PROJECT_DIR$/app/src/main/java/io/keepcoding/eh_ho/topics/view/ui/TopicsActivity.kt" />
       </list>
     </option>
@@ -252,14 +260,7 @@
             <path>
               <item name="Eh-Ho" type="1abcf292:AndroidViewProjectNode" />
               <item name="app" type="feadf853:AndroidModuleNode" />
-              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
-              <item name="eh_ho" type="cbb59c9e:AndroidPsiDirectoryNode" />
-              <item name="topics" type="462c0819:PsiDirectoryNode" />
-              <item name="viewmodel" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Eh-Ho" type="1abcf292:AndroidViewProjectNode" />
-              <item name="Gradle Scripts" type="ae0cef3a:AndroidBuildScriptsGroupNode" />
+              <item name="res" type="d4f16f75:AndroidResFolderNode" />
             </path>
           </expand>
           <select />
@@ -568,19 +569,19 @@
       <window_info id="Capture Tool" order="8" />
       <window_info anchor="bottom" id="Run" order="0" sideWeight="0.49924356" weight="0.32837838" />
       <window_info anchor="bottom" id="Logcat" order="1" sideWeight="0.49924356" weight="0.34823847" />
-      <window_info anchor="bottom" id="TODO" order="2" />
+      <window_info anchor="bottom" id="TODO" order="2" weight="0.3292683" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.45799458" />
-      <window_info anchor="bottom" id="Terminal" order="4" weight="0.32837838" />
-      <window_info anchor="bottom" id="Event Log" order="5" sideWeight="0.50075644" side_tool="true" weight="0.3286119" />
-      <window_info anchor="bottom" id="Version Control" order="6" />
-      <window_info anchor="bottom" id="Build" order="7" weight="0.31436315" />
+      <window_info anchor="bottom" id="Terminal" order="4" weight="0.32791328" />
+      <window_info anchor="bottom" id="Event Log" order="5" sideWeight="0.50037736" side_tool="true" weight="0.31436315" />
+      <window_info anchor="bottom" id="Version Control" order="6" weight="0.3292683" />
+      <window_info anchor="bottom" id="Build" order="7" sideWeight="0.49962264" weight="0.31436315" />
       <window_info anchor="bottom" id="Android Profiler" order="8" />
       <window_info anchor="bottom" id="Find" order="9" weight="0.3292683" />
       <window_info anchor="right" id="Device File Explorer" order="0" side_tool="true" />
       <window_info anchor="right" id="Capture Analysis" order="1" />
       <window_info anchor="right" id="Gradle" order="2" />
       <window_info anchor="right" id="Theme Preview" order="3" />
-      <window_info anchor="right" id="Preview" order="4" weight="0.25056604" />
+      <window_info anchor="right" id="Preview" order="4" weight="0.30037737" />
       <window_info anchor="right" id="Palette&#9;" order="5" />
     </layout-to-restore>
   </component>
@@ -625,63 +626,6 @@
     </option>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/item_topic.xml">
-      <provider editor-type-id="android-designer2" />
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="36" column="20" lean-forward="true" selection-start-line="34" selection-start-column="4" selection-end-line="39" selection-end-column="51" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/io/keepcoding/eh_ho/posts/PostsAdapter.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="361">
-          <caret line="45" lean-forward="true" selection-start-line="43" selection-start-column="12" selection-end-line="58" selection-end-column="13" />
-          <folding>
-            <element signature="e#35#294#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/io/keepcoding/eh_ho/posts/PostsFragment.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="656">
-          <caret line="87" column="21" selection-start-line="87" selection-start-column="21" selection-end-line="87" selection-end-column="21" />
-          <folding>
-            <element signature="e#36#611#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/io/keepcoding/eh_ho/data/ApiRoutes.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="421">
-          <caret line="41" column="30" selection-start-line="41" selection-start-column="30" selection-end-line="41" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/styles.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="18" selection-start-line="18" selection-end-line="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/androidx.fragment/fragment/1.0.0/bcd167792ec03e930d5c8345c99ae07b2627de84/fragment-1.0.0-sources.jar!/androidx/fragment/app/FragmentManager.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="152">
-          <caret line="2272" selection-start-line="2272" selection-end-line="2272" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/menu/nav_menu.xml">
-      <provider editor-type-id="android-designer2" />
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="5" column="24" selection-start-line="5" selection-start-column="24" selection-end-line="5" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/nav_header.xml">
       <provider editor-type-id="android-designer2" />
       <provider selected="true" editor-type-id="text-editor">
@@ -953,35 +897,89 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/strings.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="585">
+          <caret line="39" selection-start-line="39" selection-end-line="39" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/io/keepcoding/eh_ho/topics/view/ui/CreateTopicFragment.kt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-390">
-          <caret line="60" selection-start-line="60" selection-end-line="60" />
+        <state relative-caret-position="-374">
+          <caret line="16" column="61" selection-start-line="16" selection-start-column="61" selection-end-line="16" selection-end-column="61" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_sign_in.xml">
+      <provider editor-type-id="android-designer2" />
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="8" selection-start-line="8" selection-end-line="8" />
+          <folding>
+            <element signature="e#554#577#0" expanded="true" />
+            <element signature="e#860#883#0" expanded="true" />
+            <element signature="e#1385#1406#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_sign_up.xml">
+      <provider editor-type-id="android-designer2" />
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="144">
+          <caret line="21" selection-start-line="21" selection-end-line="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/menu/menu_send_post.xml">
+      <provider editor-type-id="android-designer2" />
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="6" column="52" selection-start-line="6" selection-start-column="52" selection-end-line="6" selection-end-column="52" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/menu/menu_create_post.xml">
+      <provider editor-type-id="android-designer2" />
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="6" column="52" selection-start-line="6" selection-start-column="52" selection-end-line="6" selection-end-column="52" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/io/keepcoding/eh_ho/posts/CreatePostFragment.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="690">
+          <caret line="59" column="66" lean-forward="true" selection-start-line="59" selection-start-column="66" selection-end-line="59" selection-end-column="66" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/io/keepcoding/eh_ho/latest_news/LatestNewsFragment.kt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="19" column="34" selection-start-line="19" selection-start-column="10" selection-end-line="19" selection-end-column="34" />
+        <state relative-caret-position="6">
+          <caret line="61" column="30" selection-start-line="61" selection-start-column="30" selection-end-line="61" selection-end-column="30" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/io/keepcoding/eh_ho/topics/view/ui/TopicsFragment.kt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="230">
-          <caret line="137" column="8" selection-start-line="137" selection-start-column="8" selection-end-line="137" selection-end-column="8" />
-          <folding>
-            <element signature="e#44#683#0" expanded="true" />
-            <element signature="e#2571#2970#0" />
-          </folding>
+        <state relative-caret-position="331">
+          <caret line="169" column="18" selection-start-line="169" selection-start-column="18" selection-end-line="169" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/io/keepcoding/eh_ho/data/UserRepo.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="406">
+          <caret line="113" column="11" lean-forward="true" selection-start-line="113" selection-start-column="11" selection-end-line="113" selection-end-column="11" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/io/keepcoding/eh_ho/topics/viewmodel/TopicViewModel.kt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="294">
-          <caret line="41" column="62" lean-forward="true" selection-start-line="41" selection-start-column="62" selection-end-line="41" selection-end-column="62" />
+        <state relative-caret-position="245">
+          <caret line="69" column="70" selection-start-line="69" selection-start-column="70" selection-end-line="69" selection-end-column="70" />
           <folding>
             <element signature="e#46#455#0" expanded="true" />
           </folding>
@@ -990,8 +988,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/io/keepcoding/eh_ho/topics/view/state/TopicManegementState.kt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="6" column="11" selection-start-line="6" selection-start-column="11" selection-end-line="6" selection-end-column="11" />
+        <state relative-caret-position="180">
+          <caret line="12" column="22" selection-start-line="12" selection-start-column="22" selection-end-line="12" selection-end-column="22" />
           <folding>
             <element signature="e#47#129#0" expanded="true" />
           </folding>
@@ -1000,8 +998,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/io/keepcoding/eh_ho/topics/view/ui/TopicsActivity.kt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="412">
-          <caret line="89" lean-forward="true" selection-start-line="89" selection-end-line="89" />
+        <state relative-caret-position="706">
+          <caret line="176" column="60" selection-start-line="176" selection-start-column="60" selection-end-line="176" selection-end-column="60" />
         </state>
       </provider>
     </entry>
