@@ -10,15 +10,15 @@ import com.google.android.material.snackbar.Snackbar
 import io.keepcoding.eh_ho.R
 import io.keepcoding.eh_ho.data.RequestError
 import io.keepcoding.eh_ho.data.Topic
-import io.keepcoding.eh_ho.data.TopicsRepo
 import io.keepcoding.eh_ho.topics.view.adapter.TopicsAdapter
 import kotlinx.android.synthetic.main.fragment_topics.*
 import kotlinx.android.synthetic.main.view_retry.*
 import java.lang.RuntimeException
 
 
-class TopicsFragment : Fragment(){
+const val TOPICS_FRAGMENT_TAG = "TOPICS_FRAGMENT"
 
+class TopicsFragment : Fragment() {
 
     var listener: TopicsInteractionListener? = null
     lateinit var topicsAdapter: TopicsAdapter
@@ -36,9 +36,7 @@ class TopicsFragment : Fragment(){
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
-        topicsAdapter = TopicsAdapter {
-            goToPosts(it)
-        }
+        topicsAdapter = TopicsAdapter { topicItemClicked(it) }
     }
 
 
@@ -62,16 +60,12 @@ class TopicsFragment : Fragment(){
         listTopics.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
         listTopics.adapter = topicsAdapter
 
-        buttonCreate.setOnClickListener {
-            goToCreateTopic()
-        }
+        buttonCreate.setOnClickListener { createTopicButtonClicked() }
 
-        buttonRetry.setOnClickListener {
-            loadTopics()
-        }
+        buttonRetry.setOnClickListener { retryButtonClicked() }
 
         swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary)
-        swipeRefreshLayout.setOnRefreshListener { loadTopics() }
+        swipeRefreshLayout.setOnRefreshListener { swipeRefreshLayoutClicked() }
 
 
         // OPCION MAS SIMPLE PARA OCULTAR EL FLOATINBUTTONACTION AL HACER SCROLL
@@ -90,23 +84,39 @@ class TopicsFragment : Fragment(){
 
     }
 
+
     override fun onResume() {
         super.onResume()
-        loadTopics()
-    }
+        listener?.onTopicsFragmentResumed(context = context)
 
+    }
 
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when (item?.itemId) {
-            R.id.action_log_out -> listener?.onLogOut()
+            R.id.action_log_out -> listener?.onLogOutOptionClicked()
         }
         return super.onOptionsItemSelected(item)
     }
 
-    private fun loadTopics() {
+    fun loadTopicList(topicList: List<Topic>) {
+        enableLoading(false)
+        topicsAdapter.setTopics(topics = topicList)
+    }
 
-        enableLoading(true)
+
+    private fun swipeRefreshLayoutClicked() {
+        listener?.onSwipeRefreshLayoutClicked()
+    }
+
+    private fun createTopicButtonClicked() {
+        listener?.onCreateTopicButtonClicked()
+    }
+
+    private fun retryButtonClicked() {
+        listener?.onRetryButtonClicked()
+
+/*        enableLoading(true)
 
         context?.let {
             TopicsRepo.getTopics(
@@ -121,11 +131,11 @@ class TopicsFragment : Fragment(){
                     handleRequestError(it)
                 }
             )
-        }
-
+        }*/
     }
 
-    private fun enableLoading(enabled: Boolean) {
+
+    fun enableLoading(enabled: Boolean) {
         viewRetry.visibility = View.INVISIBLE
 
         if (enabled) {
@@ -140,7 +150,7 @@ class TopicsFragment : Fragment(){
     }
 
 
-    private fun handleRequestError(requestError: RequestError) {
+    fun handleRequestError(requestError: RequestError) {
 
         listTopics.visibility = View.INVISIBLE
         viewRetry.visibility = View.VISIBLE
@@ -156,19 +166,18 @@ class TopicsFragment : Fragment(){
     }
 
 
-    private fun goToCreateTopic() {
-        listener?.onGoToCreateTopic()
-    }
-
-    private fun goToPosts(it: Topic) {
-        listener?.onTopicSelected(it)
+    private fun topicItemClicked(topic: Topic) {
+        listener?.onTopicSelected(topic)
 
     }
 
     interface TopicsInteractionListener {
         fun onTopicSelected(topic: Topic)
-        fun onGoToCreateTopic()
-        fun onLogOut()
+        fun onLogOutOptionClicked()
+        fun onRetryButtonClicked()
+        fun onTopicsFragmentResumed(context: Context?)
+        fun onCreateTopicButtonClicked()
+        fun onSwipeRefreshLayoutClicked()
     }
 
 }

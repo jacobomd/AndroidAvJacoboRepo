@@ -17,6 +17,7 @@ import kotlinx.android.synthetic.main.fragment_latest_news.*
 import kotlinx.android.synthetic.main.fragment_posts.swipeRefreshLayout
 import kotlinx.android.synthetic.main.view_retry.*
 
+const val LATEST_NEWS_FRAGMENT_TAG = "LATEST_NEWS_FRAGMENT"
 
 class LatestNewsFragment : Fragment() {
 

@@ -14,22 +14,27 @@ import kotlinx.android.synthetic.main.fragment_create_topic.*
 import kotlinx.android.synthetic.main.fragment_create_topic.parentLayout
 
 const val TAG_LOADING_DIALOG = "Loading_dialog"
-class CreateTopicFragment : Fragment () {
 
-    var listener: CreateTopicInterationListener? = null
-    lateinit var  loadingDialogFragment: LoadingDialogFragment
+class CreateTopicFragment : Fragment() {
+
+    private var listener: CreateTopicInteractionListener? = null
+    private lateinit var loadingDialogFragment: LoadingDialogFragment
 
     override fun onAttach(context: Context?) {
         super.onAttach(context)
-        if (context is CreateTopicInterationListener)
+        if (context is CreateTopicInteractionListener) {
             listener = context
+        } else {
+            throw RuntimeException("$context must implement ${CreateTopicInteractionListener::class.java.simpleName}")
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
 
-        loadingDialogFragment = LoadingDialogFragment.newInstance(getString(R.string.label_create_topic))
+        loadingDialogFragment =
+            LoadingDialogFragment.newInstance(getString(R.string.label_create_topic))
     }
 
     override fun onCreateView(
@@ -42,7 +47,6 @@ class CreateTopicFragment : Fragment () {
     }
 
 
-
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
         inflater?.inflate(R.menu.menu_create_topic, menu)
         super.onCreateOptionsMenu(menu, inflater)
@@ -50,10 +54,11 @@ class CreateTopicFragment : Fragment () {
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when (item?.itemId) {
-            R.id.action_send -> createTopic()
+            R.id.action_send -> listener?.onCreateTopicOptionClicked()
         }
         return super.onOptionsItemSelected(item)
     }
+
 
     private fun createTopic() {
         if (isFormValid()) {
@@ -87,7 +92,8 @@ class CreateTopicFragment : Fragment () {
 
     private fun enableLoadingDialog(enable: Boolean) {
         if (enable)
-            loadingDialogFragment.show(childFragmentManager,
+            loadingDialogFragment.show(
+                childFragmentManager,
                 TAG_LOADING_DIALOG
             )
         else
@@ -117,7 +123,8 @@ class CreateTopicFragment : Fragment () {
         inputTitle.text?.isNotEmpty() ?: false &&
                 inputContent.text?.isNotEmpty() ?: false
 
-    interface CreateTopicInterationListener {
+    interface CreateTopicInteractionListener {
         fun onTopicCreated()
+        fun onCreateTopicOptionClicked()
     }
 }
