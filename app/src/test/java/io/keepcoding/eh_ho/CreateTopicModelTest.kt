@@ -1,6 +1,6 @@
 package io.keepcoding.eh_ho
 
-import io.keepcoding.eh_ho.data.CreateTopicModel
+import io.keepcoding.eh_ho.domain.CreateTopicModel
 import org.junit.Test
 import org.junit.Assert.*
 

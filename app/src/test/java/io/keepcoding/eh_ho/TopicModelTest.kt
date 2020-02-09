@@ -1,6 +1,6 @@
 package io.keepcoding.eh_ho
 
-import io.keepcoding.eh_ho.data.Topic
+import io.keepcoding.eh_ho.domain.Topic
 import org.json.JSONObject
 import org.junit.Test
 import java.text.SimpleDateFormat
@@ -14,7 +14,7 @@ class TopicModelTest {
     fun getOffset_year_isCorrect() {
 
         val dateToCompare = formatDate("01/01/2020 10:00:00")
-        val testTopic = Topic (
+        val testTopic = Topic(
             title = "Test",
             date = formatDate("01/01/2019 10:00:00")
         )
@@ -30,7 +30,7 @@ class TopicModelTest {
     fun getOffset_month_isCorrect() {
 
         val dateToCompare = formatDate("01/02/2019 10:00:00")
-        val testTopic = Topic (
+        val testTopic = Topic(
             title = "Test",
             date = formatDate("01/01/2019 10:00:00")
         )
@@ -46,7 +46,7 @@ class TopicModelTest {
     fun getOffset_day_isCorrect() {
 
         val dateToCompare = formatDate("02/01/2019 10:00:00")
-        val testTopic = Topic (
+        val testTopic = Topic(
             title = "Test",
             date = formatDate("01/01/2019 10:00:00")
         )
@@ -62,7 +62,7 @@ class TopicModelTest {
     fun getOffset_hour_isCorrect() {
 
         val dateToCompare = formatDate("01/01/2019 11:00:00")
-        val testTopic = Topic (
+        val testTopic = Topic(
             title = "Test",
             date = formatDate("01/01/2019 10:00:00")
         )
@@ -78,7 +78,7 @@ class TopicModelTest {
     fun getOffset_minute_isCorrect() {
 
         val dateToCompare = formatDate("01/01/2019 10:01:00")
-        val testTopic = Topic (
+        val testTopic = Topic(
             title = "Test",
             date = formatDate("01/01/2019 10:00:00")
         )
@@ -94,7 +94,7 @@ class TopicModelTest {
     fun getOffset_seconds_isCorrect() {
 
         val dateToCompare = formatDate("01/01/2019 10:00:30")
-        val testTopic = Topic (
+        val testTopic = Topic(
             title = "Test",
             date = formatDate("01/01/2019 10:00:00")
         )

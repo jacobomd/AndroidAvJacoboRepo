@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:id="@+id/parentLayout"
     android:padding="16dp"
-    tools:context=".posts.CreatePostFragment">
+    tools:context=".feature.posts.CreatePostFragment">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"

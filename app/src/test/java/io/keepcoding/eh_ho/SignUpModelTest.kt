@@ -1,6 +1,6 @@
 package io.keepcoding.eh_ho
 
-import io.keepcoding.eh_ho.data.SignUpModel
+import io.keepcoding.eh_ho.domain.SignUpModel
 import org.junit.Test
 import org.junit.Assert.*
 

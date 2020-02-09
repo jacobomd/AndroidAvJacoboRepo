@@ -14,16 +14,16 @@
     android:supportsRtl="true"
     android:theme="@style/AppTheme"
     tools:ignore="GoogleAppIndexingWarning">
-    <activity android:name=".posts.PostsActivity"></activity>
+    <activity android:name="io.keepcoding.eh_ho.feature.posts.PostsActivity"></activity>
     <activity
-        android:name=".login.LoginActivity">
+        android:name="io.keepcoding.eh_ho.feature.login.LoginActivity">
         <intent-filter>
             <action android:name="android.intent.action.MAIN" />
 
             <category android:name="android.intent.category.LAUNCHER" />
         </intent-filter>
     </activity>
-    <activity android:name=".topics.view.ui.TopicsActivity"
+    <activity android:name="io.keepcoding.eh_ho.feature.topics.view.ui.TopicsActivity"
         android:theme="@style/AppTheme.NoActionBar"/>
 </application>
 
