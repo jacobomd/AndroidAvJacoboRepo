@@ -12,8 +12,9 @@ import io.keepcoding.eh_ho.data.repository.TopicsRepo
 import io.keepcoding.eh_ho.data.repository.UserRepo
 import io.keepcoding.eh_ho.domain.LatestNews
 import io.keepcoding.eh_ho.feature.topics.view.state.TopicManagementState
+import javax.inject.Inject
 
-class TopicViewModel : ViewModel() {
+class TopicViewModel  @Inject constructor(private val topicsRepo: TopicsRepo, private val latestNewsRepo: LatestNewsRepo) : ViewModel() {
 
 
     private lateinit var _topicManagementState: MutableLiveData<TopicManagementState>
@@ -28,7 +29,7 @@ class TopicViewModel : ViewModel() {
     fun onViewCreatedWithNoSavedData(context: Context?) {
         _topicManagementState.value = TopicManagementState.Loading
         context?.let {
-            TopicsRepo.getTopics(it,
+            topicsRepo.getTopics(
                 { topics ->
                     _topicManagementState.value =
                         TopicManagementState.LoadTopicList(topicList = topics)
@@ -93,8 +94,7 @@ class TopicViewModel : ViewModel() {
     fun onCreateTopicOptionClicked(context: Context, createTopicModel: CreateTopicModel) {
         if (isValidCreateTopicForm(model = createTopicModel)) {
             _topicManagementState.value = TopicManagementState.CreateTopicLoading
-            TopicsRepo.createTopic(
-                context = context,
+            topicsRepo.createTopic(
                 model = createTopicModel,
                 onSuccess = { topicModel ->
                     _topicManagementState.value = TopicManagementState.CreateTopicCompleted
@@ -138,7 +138,7 @@ class TopicViewModel : ViewModel() {
 
     private fun fetchTopicsAndHandleResponse(context: Context?) {
         context?.let {
-            TopicsRepo.getTopics(it,
+            topicsRepo.getTopics(
                 { topics ->
                     _topicManagementState.value =
                         TopicManagementState.LoadTopicList(topicList = topics)
@@ -153,8 +153,8 @@ class TopicViewModel : ViewModel() {
     private fun fetchLatestNewsAndHandleResponse(context: Context?) {
 
         context?.let {
-            LatestNewsRepo.getLatestNews(
-                it,
+            latestNewsRepo.getLatestNews(
+
                 { latestNews ->
                     _topicManagementState.value =
                         TopicManagementState.LoadLatestNewsList(latestNewsList = latestNews)

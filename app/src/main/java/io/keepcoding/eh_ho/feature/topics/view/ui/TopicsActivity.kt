@@ -16,6 +16,8 @@ import com.google.android.material.snackbar.Snackbar
 import io.keepcoding.eh_ho.*
 import io.keepcoding.eh_ho.data.repository.UserRepo
 import io.keepcoding.eh_ho.data.service.RequestError
+import io.keepcoding.eh_ho.di.DaggerApplicationGraph
+import io.keepcoding.eh_ho.di.UtilsModule
 import io.keepcoding.eh_ho.domain.CreateTopicModel
 import io.keepcoding.eh_ho.domain.LatestNews
 import io.keepcoding.eh_ho.domain.Topic
@@ -26,6 +28,7 @@ import io.keepcoding.eh_ho.feature.posts.PostsActivity
 import io.keepcoding.eh_ho.feature.topics.view.state.TopicManagementState
 import io.keepcoding.eh_ho.feature.topics.viewmodel.TopicViewModel
 import kotlinx.android.synthetic.main.content_topic.*
+import javax.inject.Inject
 
 
 const val TRANSACTION_CREATE_TOPIC = "create_topic"
@@ -37,14 +40,22 @@ class TopicsActivity : AppCompatActivity(),
     NavigationView.OnNavigationItemSelectedListener,
     LatestNewsFragment.LatestNewsInteractionListener {
 
-    private val topicViewModel: TopicViewModel by lazy { TopicViewModel() }
-
     lateinit var toolbar: Toolbar
     lateinit var drawerLayout: DrawerLayout
     lateinit var navView: NavigationView
 
+    //private val topicViewModel: TopicViewModel by lazy { TopicViewModel() }
+    @Inject
+    lateinit var topicViewModel: TopicViewModel
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
+        DaggerApplicationGraph.builder()
+            .utilsModule(UtilsModule(applicationContext))
+            .build()
+            .inject(this)
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_topics)
 

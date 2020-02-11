@@ -1,5 +1,6 @@
 package io.keepcoding.eh_ho.data.repository
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Handler
 import androidx.room.Room
@@ -18,19 +19,19 @@ import io.keepcoding.eh_ho.domain.Topic
 import org.json.JSONObject
 import kotlin.concurrent.thread
 
+@SuppressLint("StaticFieldLeak")
 object TopicsRepo {
 
+    lateinit var db: TopicDatabase
+    lateinit var ctx: Context
+
+
     fun getTopics(
-        context: Context,
         onSuccess: (List<Topic>) -> Unit,
         onError: (RequestError) -> Unit
     ) {
 
-        val db: TopicDatabase = Room.databaseBuilder(
-            context,
-            TopicDatabase::class.java, "topic-database"
-        ).build()
-        val username = UserRepo.getUsername(context)
+        val username = UserRepo.getUsername(ctx)
         val request = UserRequest(
             username,
             Request.Method.GET,
@@ -51,7 +52,7 @@ object TopicsRepo {
             {
                 it.printStackTrace()
                 if (it is NetworkError) {
-                    val handler = Handler(context.mainLooper)
+                    val handler = Handler(ctx.mainLooper)
                     thread {
                         val latestNewList = db.topicDao().getTopics()
                         val runnable = Runnable {
@@ -72,18 +73,17 @@ object TopicsRepo {
                     onError.invoke(RequestError(it))
             })
 
-        ApiRequestQueue.getRequesteQueue(context)
+        ApiRequestQueue.getRequesteQueue(ctx)
             .add(request)
     }
 
 
     fun createTopic(
-        context: Context,
         model: CreateTopicModel,
         onSuccess: (CreateTopicModel) -> Unit,
         onError: (RequestError) -> Unit
     ) {
-        val username = UserRepo.getUsername(context)
+        val username = UserRepo.getUsername(ctx)
         val request = UserRequest(
             username,
             Request.Method.POST,
@@ -129,7 +129,7 @@ object TopicsRepo {
             }
         )
 
-        ApiRequestQueue.getRequesteQueue(context)
+        ApiRequestQueue.getRequesteQueue(ctx)
             .add(request)
     }
 

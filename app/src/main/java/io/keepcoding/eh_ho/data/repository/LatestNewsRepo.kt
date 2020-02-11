@@ -19,18 +19,15 @@ import kotlin.concurrent.thread
 @SuppressLint("StaticFieldLeak")
 object LatestNewsRepo {
 
-    //lateinit var db: LatestNewsDatabase
+    lateinit var db: LatestNewsDatabase
+    lateinit var ctx: Context
 
     fun getLatestNews(
-        context: Context,
         onSuccess: (List<LatestNews>) -> Unit,
         onError: (RequestError) -> Unit
     ) {
-        val db: LatestNewsDatabase = Room.databaseBuilder(
-            context,
-            LatestNewsDatabase::class.java, "latestNewsList-database"
-        ).build()
-        val username = UserRepo.getUsername(context)
+
+        val username = UserRepo.getUsername(ctx)
         val request = UserRequest(
             username,
             Request.Method.GET,
@@ -56,7 +53,7 @@ object LatestNewsRepo {
             {
                 it.printStackTrace()
                 if (it is NetworkError) {
-                    val handler = Handler(context.mainLooper)
+                    val handler = Handler(ctx.mainLooper)
                     thread {
                         val latestNewList = db.latestNewsDao().getLatestNews()
                         val runnable = Runnable {
@@ -78,7 +75,7 @@ object LatestNewsRepo {
                 }
             })
 
-        ApiRequestQueue.getRequesteQueue(context)
+        ApiRequestQueue.getRequesteQueue(ctx)
             .add(request)
     }
 }
