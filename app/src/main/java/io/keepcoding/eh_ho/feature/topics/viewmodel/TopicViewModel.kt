@@ -9,6 +9,8 @@ import io.keepcoding.eh_ho.data.repository.LatestNewsRepo
 import io.keepcoding.eh_ho.data.repository.TopicsRepo
 import io.keepcoding.eh_ho.data.repository.UserRepo
 import io.keepcoding.eh_ho.data.service.RequestError
+import io.keepcoding.eh_ho.database.TopicDatabase
+import io.keepcoding.eh_ho.database.TopicEntity
 import io.keepcoding.eh_ho.domain.*
 import io.keepcoding.eh_ho.feature.topics.view.state.TopicManagementState
 import kotlinx.coroutines.*
@@ -17,12 +19,14 @@ import kotlin.coroutines.CoroutineContext
 
 
 import javax.inject.Inject
+import kotlin.concurrent.thread
 
 
 class TopicViewModel @Inject constructor(
     private val topicsRepo: TopicsRepo,
     private val latestNewsRepo: LatestNewsRepo
 ) : ViewModel(), CoroutineScope {
+
 
     private val job = Job()
     override val coroutineContext: CoroutineContext
@@ -75,6 +79,10 @@ class TopicViewModel @Inject constructor(
                         ?.let {
                             _topicManagementState.value =
                                 TopicManagementState.LoadTopicList(topicList = it.topic_list.topics)
+                            /*thread {
+                                topicsRepo.db.topicDao()
+                                    .insertAll(it.topic_list.topics.toEntity())
+                            }*/
                         }
                         ?: run {
                             _topicManagementState.value =
@@ -137,7 +145,109 @@ class TopicViewModel @Inject constructor(
 
     }
 
+
+    private fun fetchLatestNewsAndHandleResponse(context: Context?) {
+
+        context?.let {
+
+            val job = async {
+                val a =
+                    topicsRepo.getLatestNewsWithRetrofitAndCourrutines()
+                a
+            }
+
+            launch(Dispatchers.Main) {
+
+                val response: Response<ListLatestNews> = job.await()
+
+                if (response.isSuccessful) {
+                    response.body().takeIf { it != null }
+                        ?.let {
+                            _topicManagementState.value =
+                                TopicManagementState.LoadLatestNewsList(latestNewsList = it.latest_posts)
+
+                        }
+                        ?: run {
+                            _topicManagementState.value =
+                                TopicManagementState.RequestErrorReported(RequestError(message = "Body is null"))
+                        }
+                } else {
+                    RequestError(message = "Something error to happened")
+                }
+            }
+
+            /*latestNewsRepo.getLatestNews(
+
+                { latestNews ->
+                    _topicManagementState.value =
+                        TopicManagementState.LoadLatestNewsList(latestNewsList = latestNews)
+                },
+                { error ->
+                    _topicManagementState.value =
+                        TopicManagementState.RequestErrorReported(requestError = error)
+                }
+            )*/
+        }
+    }
+
     fun onCreateTopicOptionClicked(context: Context, createTopicModel: CreateTopicModel) {
+        if (isValidCreateTopicForm(model = createTopicModel)) {
+            _topicManagementState.value = TopicManagementState.CreateTopicLoading
+            context?.let {
+
+                val job = async {
+                    val a =
+                        topicsRepo.createTopicWithRetrofitAndCourrutines(model = createTopicModel)
+                    a
+                }
+                launch(Dispatchers.Main) {
+                    val response: Response<CreateTopicModel> = job.await()
+
+                    if (response.isSuccessful) {
+                        response.body().takeIf { it != null }
+                            ?.let {
+                                _topicManagementState.value =
+                                    TopicManagementState.CreateTopicCompleted
+                                _topicManagementState.value = TopicManagementState
+                                    .TopicCreatedSuccessfully(msg = context.getString(R.string.message_topic_created))
+
+                            }
+                            ?: run {
+                                _topicManagementState.value =
+                                    TopicManagementState.RequestErrorReported(RequestError(message = "Body is null"))
+                            }
+                    } else {
+                        //RequestError(message = "Something error to happened")
+                        _topicManagementState.value =
+                            TopicManagementState.CreateTopicFormErrorReported(
+                                errorMsg = getCreateTopicFormError(
+                                    context,
+                                    createTopicModel
+                                )
+                            )
+                    }
+                }
+
+                /*latestNewsRepo.getLatestNews(
+
+                    { latestNews ->
+                        _topicManagementState.value =
+                            TopicManagementState.LoadLatestNewsList(latestNewsList = latestNews)
+                    },
+                    { error ->
+                        _topicManagementState.value =
+                            TopicManagementState.RequestErrorReported(requestError = error)
+                    }
+                )*/
+            }
+        } else {
+            _topicManagementState.value = TopicManagementState.CreateTopicFormErrorReported(
+                errorMsg = getCreateTopicFormError(context, createTopicModel)
+            )
+        }
+    }
+
+    /*fun onCreateTopicOptionClicked(context: Context, createTopicModel: CreateTopicModel) {
         if (isValidCreateTopicForm(model = createTopicModel)) {
             _topicManagementState.value = TopicManagementState.CreateTopicLoading
             topicsRepo.createTopic(
@@ -164,7 +274,7 @@ class TopicViewModel @Inject constructor(
             )
         }
 
-    }
+    }*/
 
     private fun getCreateTopicFormError(context: Context, model: CreateTopicModel): String =
         with(model) {
@@ -200,6 +310,10 @@ class TopicViewModel @Inject constructor(
                         ?.let {
                             _topicManagementState.value =
                                 TopicManagementState.LoadTopicList(topicList = it.topic_list.topics)
+                            /*thread {
+                                topicsRepo.db.topicDao()
+                                    .insertAll(it.topic_list.topics.toEntity())
+                            }*/
                         }
                         ?: run {
                             _topicManagementState.value =
@@ -212,48 +326,25 @@ class TopicViewModel @Inject constructor(
         }
     }
 
-    private fun fetchLatestNewsAndHandleResponse(context: Context?) {
+    private fun List<TopicEntity>.toModel(): List<Topic> = map { it.toModel() }
 
-        context?.let {
+    private fun TopicEntity.toModel(): Topic =
+        Topic(
+            id = topicId,
+            title = title,
+            posts = posts,
+            views = views
+        )
 
-            val job = async {
-                val a =
-                    topicsRepo.getLatestNewsWithRetrofitAndCourrutines()
-                a
-            }
+    private fun List<Topic>.toEntity(): List<TopicEntity> = map { it.toEntity() }
 
-            launch(Dispatchers.Main) {
-
-                val response: Response<ListLatestNews> = job.await()
-
-                if (response.isSuccessful) {
-                    response.body().takeIf { it != null }
-                        ?.let {
-                            _topicManagementState.value =
-                                TopicManagementState.LoadLatestNewsList(latestNewsList = it.latest_posts)
-                        }
-                        ?: run {
-                            _topicManagementState.value =
-                                TopicManagementState.RequestErrorReported(RequestError(message = "Body is null"))
-                        }
-                } else {
-                    RequestError(message = "Something error to happened")
-                }
-            }
-
-            /*latestNewsRepo.getLatestNews(
-
-                { latestNews ->
-                    _topicManagementState.value =
-                        TopicManagementState.LoadLatestNewsList(latestNewsList = latestNews)
-                },
-                { error ->
-                    _topicManagementState.value =
-                        TopicManagementState.RequestErrorReported(requestError = error)
-                }
-            )*/
-        }
-    }
+    private fun Topic.toEntity(): TopicEntity = TopicEntity(
+        topicId = id,
+        title = title,
+        date = date.toString(),
+        posts = posts,
+        views = views
+    )
 
 
 }

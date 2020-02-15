@@ -1,12 +1,15 @@
 package io.keepcoding.eh_ho.data.service
 
 
+import io.keepcoding.eh_ho.domain.CreateTopicModel
 import io.keepcoding.eh_ho.domain.ListLatestNews
 import io.keepcoding.eh_ho.domain.ListTopic
 import retrofit2.Call
 import retrofit2.Response
+import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Headers
+import retrofit2.http.POST
 
 interface TopicService {
 
@@ -23,4 +26,7 @@ interface TopicService {
 
     @GET("posts.json")
     suspend fun getLatestNewsRetrofCour(): Response<ListLatestNews>
+
+    @POST("posts.json")
+    suspend fun  createTopicRetrofCour(@Body  createTopicModel: CreateTopicModel): Response<CreateTopicModel>
 }

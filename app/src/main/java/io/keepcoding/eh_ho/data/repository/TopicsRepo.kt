@@ -117,6 +117,11 @@ object TopicsRepo {
         return result
     }
 
+    suspend fun createTopicWithRetrofitAndCourrutines(model: CreateTopicModel): Response<CreateTopicModel> {
+        var result = retroF.create(TopicService::class.java).createTopicRetrofCour(model)
+        return result
+    }
+
 
     fun createTopic(
         model: CreateTopicModel,

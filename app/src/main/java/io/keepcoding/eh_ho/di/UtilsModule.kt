@@ -76,7 +76,7 @@ class UtilsModule(private val context: Context) {
 
         val retro = Retrofit.Builder()
             .client(provideOkHttpClient(sharedPreferences))
-            .client(httpClient.build())
+            //.client(httpClient.build())
             .baseUrl("https://${BuildConfig.DiscourseDomain}")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
@@ -100,6 +100,9 @@ fun provideOkHttpClient(sp: SharedPreferences): OkHttpClient {
         }
 
     }
+
+    val interceptor2 = HttpLoggingInterceptor()
+    interceptor2.setLevel(HttpLoggingInterceptor.Level.BODY)
 
     return OkHttpClient.Builder()
         .addInterceptor(interceptor)
