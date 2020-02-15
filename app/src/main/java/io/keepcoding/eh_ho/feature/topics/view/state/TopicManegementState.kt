@@ -4,6 +4,7 @@ import io.keepcoding.eh_ho.data.service.RequestError
 import io.keepcoding.eh_ho.domain.LatestNews
 import io.keepcoding.eh_ho.domain.Topic
 
+
 sealed class TopicManagementState {
     object Loading : TopicManagementState()
     class LoadTopicList(val topicList: List<Topic>) : TopicManagementState()

@@ -1,6 +1,7 @@
 package io.keepcoding.eh_ho.di
 
 import dagger.Component
+import io.keepcoding.eh_ho.feature.login.LoginActivity
 import io.keepcoding.eh_ho.feature.topics.view.ui.TopicsActivity
 import io.keepcoding.eh_ho.feature.topics.viewmodel.TopicViewModel
 import javax.inject.Singleton

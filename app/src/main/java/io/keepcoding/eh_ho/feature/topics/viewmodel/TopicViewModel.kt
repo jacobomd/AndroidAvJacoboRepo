@@ -6,15 +6,27 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import io.keepcoding.eh_ho.R
 import io.keepcoding.eh_ho.data.repository.LatestNewsRepo
-import io.keepcoding.eh_ho.domain.CreateTopicModel
-import io.keepcoding.eh_ho.domain.Topic
 import io.keepcoding.eh_ho.data.repository.TopicsRepo
 import io.keepcoding.eh_ho.data.repository.UserRepo
-import io.keepcoding.eh_ho.domain.LatestNews
+import io.keepcoding.eh_ho.data.service.RequestError
+import io.keepcoding.eh_ho.domain.*
 import io.keepcoding.eh_ho.feature.topics.view.state.TopicManagementState
+import kotlinx.coroutines.*
+import retrofit2.Response
+import kotlin.coroutines.CoroutineContext
+
+
 import javax.inject.Inject
 
-class TopicViewModel  @Inject constructor(private val topicsRepo: TopicsRepo, private val latestNewsRepo: LatestNewsRepo) : ViewModel() {
+
+class TopicViewModel @Inject constructor(
+    private val topicsRepo: TopicsRepo,
+    private val latestNewsRepo: LatestNewsRepo
+) : ViewModel(), CoroutineScope {
+
+    private val job = Job()
+    override val coroutineContext: CoroutineContext
+        get() = job + Dispatchers.IO
 
 
     private lateinit var _topicManagementState: MutableLiveData<TopicManagementState>
@@ -26,10 +38,12 @@ class TopicViewModel  @Inject constructor(private val topicsRepo: TopicsRepo, pr
             return _topicManagementState
         }
 
-    fun onViewCreatedWithNoSavedData(context: Context?) {
+    /*fun onViewCreatedWithNoSavedData(context: Context?) {
         _topicManagementState.value = TopicManagementState.Loading
         context?.let {
-            topicsRepo.getTopics(
+            // topicsRepo.getTopics(
+            topicsRepo.getTopicsWithRetrofit(
+                //topicsRepo.getTopicsWithRetrofitAndCourrutines(
                 { topics ->
                     _topicManagementState.value =
                         TopicManagementState.LoadTopicList(topicList = topics)
@@ -38,6 +52,38 @@ class TopicViewModel  @Inject constructor(private val topicsRepo: TopicsRepo, pr
                     _topicManagementState.value =
                         TopicManagementState.RequestErrorReported(requestError = error)
                 })
+        }
+    }*/
+
+    fun onViewCreatedWithNoSavedData(context: Context?) {
+
+        _topicManagementState.value = TopicManagementState.Loading
+        context?.let {
+
+            val job = async {
+                val a =
+                    topicsRepo.getTopicsWithRetrofitAndCourrutines()
+                a
+            }
+
+            launch(Dispatchers.Main) {
+
+                val response: Response<ListTopic> = job.await()
+
+                if (response.isSuccessful) {
+                    response.body().takeIf { it != null }
+                        ?.let {
+                            _topicManagementState.value =
+                                TopicManagementState.LoadTopicList(topicList = it.topic_list.topics)
+                        }
+                        ?: run {
+                            _topicManagementState.value =
+                                TopicManagementState.RequestErrorReported(RequestError(message = "Body is null"))
+                        }
+                } else {
+                    RequestError(message = "Something error to happened")
+                }
+            }
         }
     }
 
@@ -138,22 +184,64 @@ class TopicViewModel  @Inject constructor(private val topicsRepo: TopicsRepo, pr
 
     private fun fetchTopicsAndHandleResponse(context: Context?) {
         context?.let {
-            topicsRepo.getTopics(
-                { topics ->
-                    _topicManagementState.value =
-                        TopicManagementState.LoadTopicList(topicList = topics)
-                },
-                { error ->
-                    _topicManagementState.value =
-                        TopicManagementState.RequestErrorReported(requestError = error)
-                })
+
+            val job = async {
+                val a =
+                    topicsRepo.getTopicsWithRetrofitAndCourrutines()
+                a
+            }
+
+            launch(Dispatchers.Main) {
+
+                val response: Response<ListTopic> = job.await()
+
+                if (response.isSuccessful) {
+                    response.body().takeIf { it != null }
+                        ?.let {
+                            _topicManagementState.value =
+                                TopicManagementState.LoadTopicList(topicList = it.topic_list.topics)
+                        }
+                        ?: run {
+                            _topicManagementState.value =
+                                TopicManagementState.RequestErrorReported(RequestError(message = "Body is null"))
+                        }
+                } else {
+                    RequestError(message = "Something error to happened")
+                }
+            }
         }
     }
 
     private fun fetchLatestNewsAndHandleResponse(context: Context?) {
 
         context?.let {
-            latestNewsRepo.getLatestNews(
+
+            val job = async {
+                val a =
+                    topicsRepo.getLatestNewsWithRetrofitAndCourrutines()
+                a
+            }
+
+            launch(Dispatchers.Main) {
+
+                val response: Response<ListLatestNews> = job.await()
+
+                if (response.isSuccessful) {
+                    response.body().takeIf { it != null }
+                        ?.let {
+                            _topicManagementState.value =
+                                TopicManagementState.LoadLatestNewsList(latestNewsList = it.latest_posts)
+                        }
+                        ?: run {
+                            _topicManagementState.value =
+                                TopicManagementState.RequestErrorReported(RequestError(message = "Body is null"))
+                        }
+                } else {
+                    RequestError(message = "Something error to happened")
+                }
+            }
+
+            /*latestNewsRepo.getLatestNews(
 
                 { latestNews ->
                     _topicManagementState.value =
@@ -163,11 +251,9 @@ class TopicViewModel  @Inject constructor(private val topicsRepo: TopicsRepo, pr
                     _topicManagementState.value =
                         TopicManagementState.RequestErrorReported(requestError = error)
                 }
-            )
+            )*/
         }
     }
-
-
 
 
 }

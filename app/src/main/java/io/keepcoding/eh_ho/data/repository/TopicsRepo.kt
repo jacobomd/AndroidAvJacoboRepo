@@ -7,24 +7,27 @@ import androidx.room.Room
 import com.android.volley.NetworkError
 import com.android.volley.Request
 import com.android.volley.ServerError
-import io.keepcoding.eh_ho.R
-import io.keepcoding.eh_ho.data.service.ApiRequestQueue
-import io.keepcoding.eh_ho.data.service.ApiRoutes
-import io.keepcoding.eh_ho.data.service.RequestError
-import io.keepcoding.eh_ho.data.service.UserRequest
+import io.keepcoding.eh_ho.BuildConfig
+import io.keepcoding.eh_ho.data.service.*
 import io.keepcoding.eh_ho.database.TopicDatabase
 import io.keepcoding.eh_ho.database.TopicEntity
-import io.keepcoding.eh_ho.domain.CreateTopicModel
-import io.keepcoding.eh_ho.domain.Topic
+import io.keepcoding.eh_ho.domain.*
 import org.json.JSONObject
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 import kotlin.concurrent.thread
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
+import retrofit2.Call
+
 
 @SuppressLint("StaticFieldLeak")
 object TopicsRepo {
 
     lateinit var db: TopicDatabase
     lateinit var ctx: Context
-
+    lateinit var retroF: Retrofit
 
     fun getTopics(
         onSuccess: (List<Topic>) -> Unit,
@@ -47,7 +50,7 @@ object TopicsRepo {
                 }
 
                 if (it == null)
-                    onError.invoke(RequestError(messageId = R.string.error_invalid_response))
+                    onError.invoke(RequestError(messageId = io.keepcoding.eh_ho.R.string.error_invalid_response))
             },
             {
                 it.printStackTrace()
@@ -61,7 +64,7 @@ object TopicsRepo {
                             } else {
                                 onError.invoke(
                                     RequestError(
-                                        messageId = R.string.error_network
+                                        messageId = io.keepcoding.eh_ho.R.string.error_network
                                     )
                                 )
                             }
@@ -75,6 +78,43 @@ object TopicsRepo {
 
         ApiRequestQueue.getRequesteQueue(ctx)
             .add(request)
+    }
+
+    fun getTopicsWithRetrofit(
+        onSuccess: (List<Topic>) -> Unit,
+        onError: (RequestError) -> Unit
+    ) {
+
+        thread {
+
+            val syncResponse: Response<ListTopic> = retroF.create(TopicService::class.java)
+                .getTopicRetrof()
+                .execute()
+
+            val handler = Handler(ctx.mainLooper)
+            val runnable = Runnable {
+
+                if (syncResponse.isSuccessful) {
+                    syncResponse.body().takeIf { it != null }
+                        ?.let {
+                            onSuccess.invoke(it.topic_list.topics) }
+                        ?: run { onError(RequestError(message = "Body is null")) }
+                } else {
+                    onError(RequestError(message = syncResponse.errorBody()?.string()))
+                }
+            }
+            handler.post(runnable)
+        }
+    }
+
+    suspend fun getTopicsWithRetrofitAndCourrutines(): Response<ListTopic> {
+        var result = retroF.create(TopicService::class.java).getTopicRetrofCour()
+        return result
+    }
+
+    suspend fun getLatestNewsWithRetrofitAndCourrutines(): Response<ListLatestNews> {
+        var result = retroF.create(TopicService::class.java).getLatestNewsRetrofCour()
+        return result
     }
 
 
@@ -95,7 +135,7 @@ object TopicsRepo {
                 }
 
                 if (it == null)
-                    onError.invoke(RequestError(messageId = R.string.error_invalid_response))
+                    onError.invoke(RequestError(messageId = io.keepcoding.eh_ho.R.string.error_invalid_response))
             },
             {
                 it.printStackTrace()
@@ -121,7 +161,7 @@ object TopicsRepo {
                     onError.invoke(
                         RequestError(
                             it,
-                            messageId = R.string.error_network
+                            messageId = io.keepcoding.eh_ho.R.string.error_network
                         )
                     )
                 else

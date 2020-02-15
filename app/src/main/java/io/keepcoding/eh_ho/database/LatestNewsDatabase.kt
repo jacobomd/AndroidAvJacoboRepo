@@ -14,7 +14,7 @@ data class LatestNewsEntity(
     @ColumnInfo(name = "latestNews_cooked") val cooked: String,
     @ColumnInfo(name = "latestNews_created_at") val created_at: String,
     @ColumnInfo(name = "latestNews_post_number") val post_number: Int,
-    @ColumnInfo(name = "latestNews_score") val score: Int
+    @ColumnInfo(name = "latestNews_score") val score: Double
 
 )
 

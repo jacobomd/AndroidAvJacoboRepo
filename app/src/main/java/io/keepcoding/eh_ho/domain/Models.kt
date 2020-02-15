@@ -1,16 +1,17 @@
 package io.keepcoding.eh_ho.domain
 
 
+import com.google.gson.annotations.SerializedName
 import org.json.JSONObject
 import java.text.SimpleDateFormat
 import java.util.*
 
 data class Topic(
-    val id: String = UUID.randomUUID().toString(),
-    val title: String,
-    val date: Date = Date(),
-    val posts: Int = 0,
-    val views: Int = 0
+    @SerializedName("id") val id: String = UUID.randomUUID().toString(),
+    @SerializedName("title") val title: String,
+    @SerializedName("created_at") val date: Date = Date(),
+    @SerializedName("posts_count") val posts: Int = 0,
+    @SerializedName("views") val views: Int = 0
 ) {
 
     companion object {
@@ -57,6 +58,7 @@ data class Topic(
 
     }
 
+
     data class TimeOffset(val amount: Int, val unit: Int)
 
     fun getTimeOffset(dateToCompare: Date = Date()): TimeOffset {
@@ -95,7 +97,13 @@ data class Topic(
 
         return TimeOffset(0, Calendar.MINUTE)
     }
+
 }
+
+data class ListTopic (@SerializedName("topic_list") val topic_list: TopicResponse)
+
+data class TopicResponse (@SerializedName("topics") val topics: List<Topic>)
+
 
 data class Post(
     val id: String = UUID.randomUUID().toString(),
@@ -152,20 +160,19 @@ data class Post(
         }
 
 
-
     }
 }
 
 data class LatestNews(
-    val id: String = UUID.randomUUID().toString(),
-    val topic_title: String,
-    val topic_id: Int,
-    val topic_slug: String,
-    val username: String,
-    val cooked: String,
-    val created_at: String,
-    val post_number: Int = 0,
-    val score: Int = 0
+    @SerializedName("id") val id: String = UUID.randomUUID().toString(),
+    @SerializedName("topic_title") val topic_title: String,
+    @SerializedName("topic_id") val topic_id: Int,
+    @SerializedName("topic_slug") val topic_slug: String,
+    @SerializedName("username") val username: String,
+    @SerializedName("cooked") val cooked: String,
+    @SerializedName("created_at") val created_at: String,
+    @SerializedName("post_number") val post_number: Int = 0,
+    @SerializedName("score") val score: Double = 0.0
 ) {
     companion object {
         fun parseLatestNews(response: JSONObject): List<LatestNews> {
@@ -205,7 +212,7 @@ data class LatestNews(
                 content,
                 dateFormatted,
                 jsonObject.getInt("post_number"),
-                jsonObject.getInt("score")
+                jsonObject.getDouble("score")
             )
         }
 
@@ -218,3 +225,7 @@ data class LatestNews(
         }
     }
 }
+
+
+
+data class ListLatestNews (@SerializedName("latest_posts") val latest_posts: List<LatestNews>)
