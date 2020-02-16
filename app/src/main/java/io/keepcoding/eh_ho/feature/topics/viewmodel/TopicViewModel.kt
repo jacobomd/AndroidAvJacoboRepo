@@ -1,9 +1,13 @@
 package io.keepcoding.eh_ho.feature.topics.viewmodel
 
 import android.content.Context
+import android.os.Handler
+import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.android.volley.NetworkError
+import com.google.android.material.snackbar.Snackbar
 import io.keepcoding.eh_ho.R
 import io.keepcoding.eh_ho.data.repository.LatestNewsRepo
 import io.keepcoding.eh_ho.data.repository.TopicsRepo
@@ -13,7 +17,9 @@ import io.keepcoding.eh_ho.database.TopicDatabase
 import io.keepcoding.eh_ho.database.TopicEntity
 import io.keepcoding.eh_ho.domain.*
 import io.keepcoding.eh_ho.feature.topics.view.state.TopicManagementState
+import io.keepcoding.eh_ho.feature.topics.view.ui.TopicsActivity
 import kotlinx.coroutines.*
+import retrofit2.HttpException
 import retrofit2.Response
 import kotlin.coroutines.CoroutineContext
 
@@ -24,7 +30,8 @@ import kotlin.concurrent.thread
 
 class TopicViewModel @Inject constructor(
     private val topicsRepo: TopicsRepo,
-    private val latestNewsRepo: LatestNewsRepo
+    private val latestNewsRepo: LatestNewsRepo,
+    private val db: TopicDatabase
 ) : ViewModel(), CoroutineScope {
 
 
@@ -70,27 +77,59 @@ class TopicViewModel @Inject constructor(
                 a
             }
 
-            launch(Dispatchers.Main) {
+            try {
 
-                val response: Response<ListTopic> = job.await()
+                launch(Dispatchers.Main) {
 
-                if (response.isSuccessful) {
-                    response.body().takeIf { it != null }
-                        ?.let {
-                            _topicManagementState.value =
-                                TopicManagementState.LoadTopicList(topicList = it.topic_list.topics)
-                            /*thread {
-                                topicsRepo.db.topicDao()
+                    val response: Response<ListTopic> = job.await()
+
+                    if (response.isSuccessful) {
+                        response.body().takeIf { it != null }
+                            ?.let {
+                                _topicManagementState.value =
+                                    TopicManagementState.LoadTopicList(topicList = it.topic_list.topics)
+
+                                //  IMPLEMENTACION QUE NO FUNCIONA DE LA PERSISTENCIA DENTRO DE RETROFIT-COROUTINES
+/*                            thread {
+                                db.topicDao()
                                     .insertAll(it.topic_list.topics.toEntity())
                             }*/
-                        }
-                        ?: run {
-                            _topicManagementState.value =
-                                TopicManagementState.RequestErrorReported(RequestError(message = "Body is null"))
-                        }
-                } else {
-                    RequestError(message = "Something error to happened")
+                            }
+                            ?: run {
+                                _topicManagementState.value =
+                                    TopicManagementState.RequestErrorReported(RequestError(message = "Body is null"))
+
+                                //  IMPLEMENTACION QUE NO FUNCIONA DE LA PERSISTENCIA DENTRO DE RETROFIT-COROUTINES
+/*                            if (it is NetworkError) {
+                                val handler = Handler(context.mainLooper)
+                                thread {
+                                    val latestNewList = db.topicDao().getTopics()
+                                    val runnable = Runnable {
+                                        if (latestNewList.isNotEmpty()) {
+                                            _topicManagementState.value =
+                                                TopicManagementState.LoadTopicList(topicList = latestNewList.toModel())
+                                        } else {
+                                            RequestError(messageId = R.string.error_network)
+                                        }
+                                    }
+                                    handler.post(runnable)
+                                }
+
+                            } else {
+                                RequestError(messageId = R.string.error_network)
+                            }*/
+
+                            }
+                    } else {
+                        RequestError(message = "Something error to happened")
+                    }
                 }
+            } catch (e: HttpException) {
+                Toast.makeText(
+                    context.applicationContext,
+                    "error ${e.message()}",
+                    Toast.LENGTH_LONG
+                ).show()
             }
         }
     }
@@ -301,27 +340,58 @@ class TopicViewModel @Inject constructor(
                 a
             }
 
-            launch(Dispatchers.Main) {
+            try {
 
-                val response: Response<ListTopic> = job.await()
+                launch(Dispatchers.Main) {
 
-                if (response.isSuccessful) {
-                    response.body().takeIf { it != null }
-                        ?.let {
-                            _topicManagementState.value =
-                                TopicManagementState.LoadTopicList(topicList = it.topic_list.topics)
-                            /*thread {
-                                topicsRepo.db.topicDao()
+                    val response: Response<ListTopic> = job.await()
+
+                    if (response.isSuccessful) {
+                        response.body().takeIf { it != null }
+                            ?.let {
+                                _topicManagementState.value =
+                                    TopicManagementState.LoadTopicList(topicList = it.topic_list.topics)
+
+                                //  IMPLEMENTACION QUE NO FUNCIONA DE LA PERSISTENCIA DENTRO DE RETROFIT-COROUTINES
+/*                            thread {
+                                db.topicDao()
                                     .insertAll(it.topic_list.topics.toEntity())
                             }*/
-                        }
-                        ?: run {
-                            _topicManagementState.value =
-                                TopicManagementState.RequestErrorReported(RequestError(message = "Body is null"))
-                        }
-                } else {
-                    RequestError(message = "Something error to happened")
+                            }
+                            ?: run {
+                                _topicManagementState.value =
+                                    TopicManagementState.RequestErrorReported(RequestError(message = "Body is null"))
+
+                                //  IMPLEMENTACION QUE NO FUNCIONA DE LA PERSISTENCIA DENTRO DE RETROFIT-COROUTINES
+                                /* if (it is NetworkError) {
+                                 val handler = Handler(context.mainLooper)
+                                 thread {
+                                     val latestNewList = db.topicDao().getTopics()
+                                     val runnable = Runnable {
+                                         if (latestNewList.isNotEmpty()) {
+                                             _topicManagementState.value =
+                                                 TopicManagementState.LoadTopicList(topicList = latestNewList.toModel())
+                                         } else {
+                                             RequestError(messageId = R.string.error_network)
+                                         }
+                                     }
+                                     handler.post(runnable)
+                                 }
+
+                             } else {
+                                 RequestError(messageId = R.string.error_network)
+                             }*/
+                            }
+                    } else {
+                        RequestError(message = "Something error to happened")
+                    }
                 }
+            } catch (e: HttpException) {
+                Toast.makeText(
+                    it,
+                    "error ${e.message()}",
+                    Toast.LENGTH_LONG
+                ).show()
             }
         }
     }
